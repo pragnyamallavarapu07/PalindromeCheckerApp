@@ -16,18 +16,18 @@ public class PalindromeCheckerApp {
         System.out.println("Input text:");
         String input = sc.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<Character>();
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Add characters to deque
+
         for (char c : input.toCharArray()) {
-            deque.add(c);
+            list.add(c);
         }
 
         boolean isPalindrome = true;
 
-        // Compare first and last characters
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
+
+        while (list.size() > 1) {
+            if (list.removeFirst() != list.removeLast()) {
                 isPalindrome = false;
                 break;
             }
