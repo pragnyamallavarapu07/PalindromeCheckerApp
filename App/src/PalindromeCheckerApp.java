@@ -16,28 +16,22 @@ public class PalindromeCheckerApp {
         System.out.println("Input text:");
         String input = sc.nextLine();
 
-        boolean result = check(input, 0, input.length() - 1);
+        String normalized = input.toLowerCase(); // optional normalization
+        boolean isPalindrome = true;
 
-        if (result) {
+        for (int i = 0; i < normalized.length() / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
             System.out.println("The text is a Palindrome.");
         } else {
             System.out.println("The text is NOT a Palindrome.");
         }
 
         sc.close();
-    }
-
-    // Recursive method
-    private static boolean check(String s, int start, int end) {
-
-        if (start >= end) {
-            return true;
-        }
-
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        return check(s, start + 1, end - 1);
     }
 }
