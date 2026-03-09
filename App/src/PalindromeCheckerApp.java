@@ -1,35 +1,42 @@
+
 import java.util.Scanner;
 
 public class PalindromeCheckerApp {
-/**
- * Application entry point
- *
- * This is a Java Palindrome Checker App Welcome Message
- *
- * @author Developer
- * @Version 1.0
- */
-   public static void main(String[]args){
-       Scanner sc =new Scanner(System.in);
-       System.out.println("Input text :");
-       String input =sc.nextLine();
-       boolean isPalindrome;
-       for (int i =0; i < input.length()/2; i++){
 
-           if (input.charAt(i) != input.charAt(input.length() -1 -i)){
-               isPalindrome =false;
-               break;
-           }
-           else{
-               isPalindrome =true;
-               break;
-           }
-       }
-       if(isPalindrome =true){
-             System.out.println("is it a palindrome? :true");
-       }
-       else{
-             System.out.println("s it a palindrome? :false");
-       }
-   }
+    /**
+     * Application entry point
+     * This is a Java Palindrome Checker App
+     * @author Developer
+     * @version 1.0
+     */
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Input text:");
+        String input = sc.nextLine();
+
+        char[] chars = input.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+        boolean isPalindrome = true;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        if (isPalindrome) {
+            System.out.println("The text is a Palindrome.");
+        } else {
+            System.out.println("The text is NOT a Palindrome.");
+        }
+
+        sc.close();
+    }
 }
