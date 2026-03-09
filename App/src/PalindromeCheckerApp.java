@@ -2,53 +2,67 @@ import java.util.*;
 
 public class PalindromeCheckerApp {
 
-    /**
-     * Application entry point
-     * This is a Java Palindrome Checker App
-     * @author Developer
-     * @version 1.0
-     */
-
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-
         System.out.println("Input text:");
         String input = sc.nextLine();
 
-        PalindromeStrategy strategy = new StackStrategy();
-        boolean result = strategy.check(input);
+        // --- Stack Approach ---
+        long startStack = System.nanoTime();
+        boolean resultStack = checkWithStack(input);
+        long endStack = System.nanoTime();
 
-        if (result) {
-            System.out.println("The text is a Palindrome.");
-        } else {
-            System.out.println("The text is NOT a Palindrome.");
-        }
+        // --- Two-Pointer Approach ---
+        long startTwoPointer = System.nanoTime();
+        boolean resultTwoPointer = checkWithTwoPointers(input);
+        long endTwoPointer = System.nanoTime();
+
+        // --- Recursion Approach ---
+        long startRecursion = System.nanoTime();
+        boolean resultRecursion = checkWithRecursion(input, 0, input.length() - 1);
+        long endRecursion = System.nanoTime();
+
+        // --- Display results ---
+        System.out.println("\n=== Palindrome Check Results ===");
+        System.out.printf("Stack Approach: %s (Time: %d ns)%n",
+                resultStack ? "Palindrome" : "Not Palindrome", endStack - startStack);
+        System.out.printf("Two-Pointer Approach: %s (Time: %d ns)%n",
+                resultTwoPointer ? "Palindrome" : "Not Palindrome", endTwoPointer - startTwoPointer);
+        System.out.printf("Recursion Approach: %s (Time: %d ns)%n",
+                resultRecursion ? "Palindrome" : "Not Palindrome", endRecursion - startRecursion);
 
         sc.close();
     }
-}
 
-interface PalindromeStrategy {
-    boolean check(String input);
-}
-
-class StackStrategy implements PalindromeStrategy {
-
-    public boolean check(String input) {
-
+    // --- Stack Strategy ---
+    public static boolean checkWithStack(String input) {
         Stack<Character> stack = new Stack<>();
+        for (char c : input.toCharArray()) stack.push(c);
 
         for (char c : input.toCharArray()) {
-            stack.push(c);
+            if (c != stack.pop()) return false;
         }
-
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
-                return false;
-            }
-        }
-
         return true;
+    }
+
+    // --- Two-Pointer Strategy ---
+    public static boolean checkWithTwoPointers(String input) {
+        int start = 0;
+        int end = input.length() - 1;
+
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // --- Recursion Strategy ---
+    public static boolean checkWithRecursion(String input, int start, int end) {
+        if (start >= end) return true;
+        if (input.charAt(start) != input.charAt(end)) return false;
+        return checkWithRecursion(input, start + 1, end - 1);
     }
 }
