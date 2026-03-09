@@ -16,22 +16,34 @@ public class PalindromeCheckerApp {
         System.out.println("Input text:");
         String input = sc.nextLine();
 
-        String normalized = input.toLowerCase(); // optional normalization
-        boolean isPalindrome = true;
+        PalindromeService service = new PalindromeService();
+        boolean result = service.checkPalindrome(input);
 
-        for (int i = 0; i < normalized.length() / 2; i++) {
-            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome) {
+        if (result) {
             System.out.println("The text is a Palindrome.");
         } else {
             System.out.println("The text is NOT a Palindrome.");
         }
 
         sc.close();
+    }
+}
+
+class PalindromeService {
+
+    public boolean checkPalindrome(String input) {
+
+        int start = 0;
+        int end = input.length() - 1;
+
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
     }
 }
